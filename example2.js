@@ -62,15 +62,15 @@ var lineFunction = d3.line()
     })
     .y(function (d) {
         return d.y;
-    });
+    })
+    .curve(d3.curveCardinal);
 
 //The line SVG Path we draw
 var lineGraph = svg.append("path")
     .attr("d", lineFunction(lineData))
     .attr("stroke", "blue")
     .attr("stroke-width", 2)
-    .attr("fill", "none")
-    .curve(d3.curveLinear);
+    .attr("fill", "none");
 
 
 listSvg.exit().remove();
