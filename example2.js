@@ -1,15 +1,20 @@
 import * as d3 from 'd3'
 
 
+let info = {};
+
+let x = d3.scaleLinear().domain([0, 100]).range([0, 500]);
+let y = d3.scaleLinear().domain([100, 0]).range([0, 500]);
+
+
 let data = [100];
 
 let listSvg = d3.select('#example2').selectAll('svg').data(data);
 
-
 let svg = listSvg.enter()
     .append('svg')
-    .attr('width', 600)
-    .attr('height', 600);
+    .attr('width', '100%')
+    .attr('height', 900);
 // <path id="lineAB" d="M 100 350 l 150 -300" stroke="red" stroke-width="3" fill="none" />
 // <path id="lineBC" d="M 250 50 l 150 300" stroke="red" stroke-width="3" fill="none" />
 //     <path d="M 175 200 l 150 0" stroke="green" stroke-width="3" fill="none" />
@@ -50,6 +55,16 @@ let svg = listSvg.enter()
 //     .attr('stroke', 'black')
 //     .attr('stroke-width', '6')
 //     .attr('fill', 'none');
+// Add the X Axis
+svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(100," + 600 + ")")
+    .call(d3.axisBottom(x));
+
+svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(100," + 100 + ")")
+    .call(d3.axisLeft(y));
 
 
 let lineData = [{"x": 1, "y": 5}, {"x": 20, "y": 20},
@@ -66,7 +81,7 @@ var lineFunction = d3.line()
     .curve(d3.curveCardinal);
 
 //The line SVG Path we draw
-var lineGraph = svg.append("path")
+svg.append("path")
     .attr("d", lineFunction(lineData))
     .attr("stroke", "blue")
     .attr("stroke-width", 2)
